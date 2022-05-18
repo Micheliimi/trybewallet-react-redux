@@ -21,10 +21,10 @@ export function fetchAPICurr() {
       dispatch(requestAPI());
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const resultAll = Object.keys(data);
       const result = resultAll.filter((curr) => curr !== 'USDT');
-      console.log(result);
+      // console.log(result);
       dispatch(getCurr(result));
     } catch (error) {
       console.log(error);
