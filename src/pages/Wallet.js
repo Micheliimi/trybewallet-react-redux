@@ -14,17 +14,18 @@ import { fetchAPICurr, addExpanse, addExpanseThunk } from '../actions/index';
 //   tag: 'Alimentação',
 //   description: '',
 // }
+const ALIMENTACAO = 'alimentação';
 class Wallet extends React.Component {
   constructor() {
     super();
 
     this.state = {
       paymentsOptions: ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'],
-      tagsOptions: ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
+      tagsOptions: [ALIMENTACAO, 'Lazer', 'Trabalho', 'Transporte', 'Saúde'],
       value: '0',
       coin: 'USD',
       payment: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: ALIMENTACAO,
       description: '',
       // expenses: [],
       // resultAPI: {},
@@ -60,13 +61,19 @@ class Wallet extends React.Component {
     // 0, 1, , , 4, 5, ?
     // const exchangeRates = await fetchAPI();
     // dispatchAddExpanse({ value, currency: coin, method: payment, tag, description, exchangeRates, id });
-    dispatchAddExpanseThunk({ value, currency: coin, method: payment, tag, description, id });
+    dispatchAddExpanseThunk({ value,
+      currency: coin,
+      method: payment,
+      tag,
+      description,
+      id,
+    });
 
     this.setState({
       value: '0',
       coin: 'USD',
       payment: 'Dinheiro',
-      tag: 'Alimentação',
+      tag: ALIMENTACAO,
       description: '',
     });
     // const { addUser } = this.props;
@@ -76,7 +83,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { currencies } = this.props;
+    const { currencies, expenses } = this.props;
     const { paymentsOptions,
       tagsOptions,
       value,
@@ -143,6 +150,63 @@ class Wallet extends React.Component {
             disabled={ false }
           />
         </div>
+        <table>
+          <tr>
+            <th>
+              Descrição
+            </th>
+            <th>
+              Tag
+            </th>
+            <th>
+              Método de pagamento
+            </th>
+            <th>
+              Valor
+            </th>
+            <th>
+              Moeda
+            </th>
+            <th>
+              Câmbio utilizado
+            </th>
+            <th>
+              Valor convertido
+            </th>
+            <th>
+              Moeda de conversão
+            </th>
+            <th>
+              Editar/Excluir
+            </th>
+          </tr>
+          {expenses.map((expense) => {
+            const conversao = Number(expense
+              .value) * Number(expense
+              .exchangeRates[expense.currency].ask);
+            const result = (Math.round(expense.value * 100) / 100);
+            return (
+              <tr key={ expense.id }>
+                <td>{ expense.description }</td>
+                <td>{ expense.tag }</td>
+                <td>{ expense.method }</td>
+                <td>{ result.toFixed(2) }</td>
+                <td>{ expense.exchangeRates[expense.currency].name }</td>
+                <td>
+                  {
+                    Number(expense.exchangeRates[expense.currency].ask).toFixed(2)
+                  }
+                </td>
+                <td>{ conversao.toFixed(2).toString() }</td>
+                <td>Real</td>
+                <td>
+                  <Button />
+                  <Button />
+                </td>
+              </tr>
+            );
+          })}
+        </table>
       </div>
     );
   }
@@ -151,7 +215,7 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf.isRequired,
-  dispatchAddExpanse: PropTypes.func.isRequired,
+  // dispatchAddExpanse: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf.isRequired,
   dispatchAddExpanseThunk: PropTypes.func.isRequired,
 };
