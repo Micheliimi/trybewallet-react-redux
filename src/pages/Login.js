@@ -17,7 +17,6 @@ class Login extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.validateForm = this.validateForm.bind(this);
-    this.validateForm = this.validateForm.bind(this);
     this.sendAction = this.sendAction.bind(this);
   }
 

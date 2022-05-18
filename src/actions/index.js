@@ -2,6 +2,7 @@
 export const USER_FORM = 'USER_FORM';
 export const GET_CURR = 'GET_CURR';
 export const REQUEST_API = 'REQUEST_API';
+export const ADD_EXPENSE = 'ADD_EXPENSE';
 
 export const getUser = (email) => ({
   type: USER_FORM,
@@ -15,10 +16,15 @@ export const getCurr = (payload) => ({
   payload,
 });
 
+export const addExpanse = (payload) => ({
+  type: ADD_EXPENSE,
+  payload,
+});
+
 export function fetchAPICurr() {
   return async (dispatch) => {
     try {
-      dispatch(requestAPI());
+      // dispatch(requestAPI());
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
       // console.log(data);
@@ -31,3 +37,31 @@ export function fetchAPICurr() {
     }
   };
 }
+
+export async function fetchAPI() {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
+  console.log(data);
+  // console.log(result);
+  // excluir moeda com -> delete data[moeda]
+  delete data.USDT;
+  return data;
+}
+
+export function addExpanseThunk(payload) {
+  return async (dispatch) => {
+    try {
+      // dispatch(requestAPI());
+      const exchangeRates = await fetchAPI();
+      // const exchangeRates = await result.json();
+      dispatch(addExpanse({ ...payload, exchangeRates }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+// export const addExpanseThunk = (payload) => ({
+//   type: ADD_EXPENSE,
+//   payload,
+// });
