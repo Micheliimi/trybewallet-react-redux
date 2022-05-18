@@ -14,7 +14,9 @@ class Header extends React.Component {
   render() {
     const { email, expenses } = this.props;
     const sumValue = expenses.reduce((acumulador, valorAtual) => {
-      const result = Number(valorAtual.value) * Number(valorAtual.exchangeRates[valorAtual.currency].ask);
+      const result = Number(valorAtual
+        .value) * Number(valorAtual
+        .exchangeRates[valorAtual.currency].ask);
       acumulador += result;
       return acumulador;
     }, 0);

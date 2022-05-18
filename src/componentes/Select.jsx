@@ -9,8 +9,6 @@ class Select extends Component {
       onChange,
       value,
       id,
-      defaultOption,
-      defaultValue,
       options,
       data,
     } = this.props;
@@ -46,11 +44,6 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
-  defaultValue: PropTypes.string,
-};
-
-Select.defaultProps = {
-  defaultValue: '',
 };
 
 export default Select;
