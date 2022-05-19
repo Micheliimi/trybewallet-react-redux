@@ -3,6 +3,8 @@ export const USER_FORM = 'USER_FORM';
 export const GET_CURR = 'GET_CURR';
 export const REQUEST_API = 'REQUEST_API';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const UPDATE_EXPENSES = 'UPDATE_EXPENSES';
+export const CHANGE_SUM_EXPENSES = 'CHANGE_SUM_EXPENSES';
 
 export const getUser = (email) => ({
   type: USER_FORM,
@@ -18,6 +20,17 @@ export const getCurr = (payload) => ({
 
 export const addExpanse = (payload) => ({
   type: ADD_EXPENSE,
+  payload,
+});
+
+export const updateExpenses = (payload, sum) => ({
+  type: UPDATE_EXPENSES,
+  payload,
+  sum,
+});
+
+export const changeSumExpenses = (payload) => ({
+  type: CHANGE_SUM_EXPENSES,
   payload,
 });
 

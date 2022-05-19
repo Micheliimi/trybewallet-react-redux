@@ -5,15 +5,13 @@ import Header from '../componentes/Header';
 import Input from '../componentes/Input';
 import Select from '../componentes/Select';
 import Button from '../componentes/Button';
-import { fetchAPICurr, addExpanse, addExpanseThunk } from '../actions/index';
+import Table from '../componentes/Table';
+import { fetchAPICurr,
+  addExpanseThunk,
+  updateExpenses,
+} from '../actions/index';
+import sumExpenses from '../functions';
 
-// const INITIAL_STATE = {
-//   value: '0',
-//   coin: 'USD',
-//   payment: 'Dinheiro',
-//   tag: 'Alimentação',
-//   description: '',
-// }
 const ALIMENTACAO = 'Alimentação';
 class Wallet extends React.Component {
   constructor() {
@@ -27,12 +25,17 @@ class Wallet extends React.Component {
       payment: 'Dinheiro',
       tag: ALIMENTACAO,
       description: '',
-      // expenses: [],
-      // resultAPI: {},
+      editMode: false,
+      indexExpense: 0,
+      exchangeRates: {},
+      id: 0,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.sendAction = this.sendAction.bind(this);
+    this.deleteExpense = this.deleteExpense.bind(this);
+    this.editExpense = this.editExpense.bind(this);
+    this.finishedEdition = this.finishedEdition.bind(this);
   }
 
   componentDidMount() {
@@ -45,22 +48,14 @@ class Wallet extends React.Component {
     this.setState(({ [name]: value })/* , () => this.validateForm() */);
   }
 
-  async sendAction() {
+  sendAction() {
     const { value, coin, payment, tag, description } = this.state;
     const { expenses, dispatchAddExpanseThunk } = this.props;
-    // this.setState((preventState) => ({
-    //   expenses: [...preventState.expenses,
-    //     { id: expenses.length, value, coin, payment, tag, description }],
-    // }));
     let id = 0;
     if (expenses.length > 0) {
       const ultimoEl = expenses[expenses.length - 1];
       id = ultimoEl.id + 1;
     }
-
-    // 0, 1, , , 4, 5, ?
-    // const exchangeRates = await fetchAPI();
-    // dispatchAddExpanse({ value, currency: coin, method: payment, tag, description, exchangeRates, id });
     dispatchAddExpanseThunk({ value,
       currency: coin,
       method: payment,
@@ -68,7 +63,6 @@ class Wallet extends React.Component {
       description,
       id,
     });
-
     this.setState({
       value: '0',
       coin: 'USD',
@@ -76,10 +70,65 @@ class Wallet extends React.Component {
       tag: ALIMENTACAO,
       description: '',
     });
-    // const { addUser } = this.props;
-    // addUser(email);
-    // const { history } = this.props;
-    // history.push('/carteira'); // Usar history.push para redirecionar!
+  }
+
+  editExpense(id) {
+    const { expenses } = this.props;
+    const editedExpense = expenses.filter((expense) => expense.id === id);
+    const index = expenses.indexOf(editedExpense[0], 0);
+    this.setState({
+      editMode: true,
+      value: editedExpense[0].value,
+      coin: editedExpense[0].currency,
+      payment: editedExpense[0].method,
+      tag: editedExpense[0].tag,
+      description: editedExpense[0].description,
+      exchangeRates: editedExpense[0].exchangeRates,
+      indexExpense: index,
+      id: editedExpense[0].id,
+    });
+  }
+
+  finishedEdition() {
+    const { value,
+      coin,
+      payment,
+      tag,
+      description,
+      indexExpense,
+      exchangeRates,
+      id,
+    } = this.state;
+    const { expenses, getUpdateExpenses } = this.props;
+    const newObjExpenseEdited = { value,
+      currency: coin,
+      method: payment,
+      tag,
+      description,
+      exchangeRates,
+      id,
+    };
+    expenses.splice(indexExpense, 1, newObjExpenseEdited);
+    const sum = sumExpenses(expenses);
+    getUpdateExpenses(expenses, sum);
+    this.setState({
+      value: '0',
+      coin: 'USD',
+      payment: 'Dinheiro',
+      tag: ALIMENTACAO,
+      description: '',
+      indexExpense: 0,
+      exchangeRates: '',
+      id: 0,
+      editMode: false,
+    });
+  }
+
+  deleteExpense(id) {
+    const { expenses, getUpdateExpenses } = this.props;
+    const deletedExpense = expenses.filter((expense) => expense.id !== id);
+    const sum = sumExpenses(deletedExpense);
+    getUpdateExpenses(deletedExpense, sum);
   }
 
   render() {
@@ -91,6 +140,7 @@ class Wallet extends React.Component {
       payment,
       description,
       tag,
+      editMode,
     } = this.state;
     return (
       <div>
@@ -108,7 +158,7 @@ class Wallet extends React.Component {
             required
           />
           <Select
-            data="coin-input"
+            data="currency-input"
             onChange={ this.handleChange }
             value={ coin }
             label="Moeda: "
@@ -143,70 +193,28 @@ class Wallet extends React.Component {
             name="description"
             required
           />
-          <Button
-            type="button"
-            label="Adicionar despesa"
-            onClick={ this.sendAction }
-            disabled={ false }
-          />
+          {editMode
+            ? (
+              <Button
+                type="button"
+                label="Editar despesa"
+                onClick={ this.finishedEdition }
+                disabled={ false }
+              />
+            )
+            : (
+              <Button
+                type="button"
+                label="Adicionar despesa"
+                onClick={ this.sendAction }
+                disabled={ false }
+              />)}
         </div>
-        <table>
-          <tr>
-            <th>
-              Descrição
-            </th>
-            <th>
-              Tag
-            </th>
-            <th>
-              Método de pagamento
-            </th>
-            <th>
-              Valor
-            </th>
-            <th>
-              Moeda
-            </th>
-            <th>
-              Câmbio utilizado
-            </th>
-            <th>
-              Valor convertido
-            </th>
-            <th>
-              Moeda de conversão
-            </th>
-            <th>
-              Editar/Excluir
-            </th>
-          </tr>
-          {expenses.map((expense) => {
-            const conversao = Number(expense
-              .value) * Number(expense
-              .exchangeRates[expense.currency].ask);
-            const result = (Math.round(expense.value * 100) / 100);
-            return (
-              <tr key={ expense.id }>
-                <td>{ expense.description }</td>
-                <td>{ expense.tag }</td>
-                <td>{ expense.method }</td>
-                <td>{ result.toFixed(2) }</td>
-                <td>{ expense.exchangeRates[expense.currency].name }</td>
-                <td>
-                  {
-                    Number(expense.exchangeRates[expense.currency].ask).toFixed(2)
-                  }
-                </td>
-                <td>{ conversao.toFixed(2).toString() }</td>
-                <td>Real</td>
-                <td>
-                  <Button />
-                  <Button />
-                </td>
-              </tr>
-            );
-          })}
-        </table>
+        <Table
+          expenses={ expenses }
+          editExpense={ this.editExpense }
+          deleteExpense={ this.deleteExpense }
+        />
       </div>
     );
   }
@@ -215,15 +223,15 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   getCurrencies: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf.isRequired,
-  // dispatchAddExpanse: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf.isRequired,
   dispatchAddExpanseThunk: PropTypes.func.isRequired,
+  getUpdateExpenses: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrencies: () => dispatch(fetchAPICurr()),
-  dispatchAddExpanse: (expanse) => dispatch(addExpanse(expanse)),
-  dispatchAddExpanseThunk: (expanse) => dispatch(addExpanseThunk(expanse)),
+  dispatchAddExpanseThunk: (expense) => dispatch(addExpanseThunk(expense)),
+  getUpdateExpenses: (expense, sum) => dispatch(updateExpenses(expense, sum)),
 });
 
 const mapStateToProps = (state) => ({

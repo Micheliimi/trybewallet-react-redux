@@ -3,9 +3,14 @@ import PropTypes from 'prop-types';
 
 class Button extends Component {
   render() {
-    const { label, onClick, disabled } = this.props;
+    const { label, onClick, disabled, data } = this.props;
     return (
-      <button type="button" onClick={ onClick } disabled={ disabled }>
+      <button
+        type="button"
+        onClick={ onClick }
+        disabled={ disabled }
+        data-testid={ data }
+      >
         { label }
       </button>
     );
@@ -18,4 +23,9 @@ Button.propTypes = {
   onClick: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   disabled: PropTypes.bool.isRequired,
+  data: PropTypes.string,
+};
+
+Button.defaultProps = {
+  data: '',
 };

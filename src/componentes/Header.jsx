@@ -3,16 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Header extends React.Component {
-  componentDidMount() {
+  componentDidUpdate() {
     const { expenses } = this.props;
     console.log(expenses);
-    // expenses.reduce((acumulador, valorAtual) => {
-
-    // })
   }
 
   render() {
     const { email, expenses } = this.props;
+    // console.log(expenses);
     const sumValue = expenses.reduce((acumulador, valorAtual) => {
       const result = Number(valorAtual
         .value) * Number(valorAtual
@@ -24,7 +22,9 @@ class Header extends React.Component {
     return (
       <div>
         <h3 data-testid="email-field">{ email }</h3>
-        <h3 data-testid="total-field">{ sumValue.toFixed(2) }</h3>
+        <h3 data-testid="total-field">
+          { sumValue.toFixed(2) }
+        </h3>
         <h3 data-testid="header-currency-field">BRL</h3>
       </div>
     );
@@ -39,6 +39,7 @@ Header.propTypes = {
 const mapStateToProps = (state) => ({
   email: state.user.email,
   expenses: state.wallet.expenses,
+  sumState: state.wallet.sumExpenses,
 });
 
 export default connect(mapStateToProps)(Header);
