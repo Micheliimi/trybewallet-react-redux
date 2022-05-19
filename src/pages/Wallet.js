@@ -14,7 +14,7 @@ import { fetchAPICurr, addExpanse, addExpanseThunk } from '../actions/index';
 //   tag: 'Alimentação',
 //   description: '',
 // }
-const ALIMENTACAO = 'alimentação';
+const ALIMENTACAO = 'Alimentação';
 class Wallet extends React.Component {
   constructor() {
     super();
