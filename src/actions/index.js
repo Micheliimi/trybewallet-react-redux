@@ -3,8 +3,8 @@ export const USER_FORM = 'USER_FORM';
 export const GET_CURR = 'GET_CURR';
 export const REQUEST_API = 'REQUEST_API';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
-export const UPDATE_EXPENSES = 'UPDATE_EXPENSES';
-export const CHANGE_SUM_EXPENSES = 'CHANGE_SUM_EXPENSES';
+export const EDIT_EXPENSE = 'EDIT_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const getUser = (email) => ({
   type: USER_FORM,
@@ -23,27 +23,23 @@ export const addExpanse = (payload) => ({
   payload,
 });
 
-export const updateExpenses = (payload, sum) => ({
-  type: UPDATE_EXPENSES,
+export const editExpenseAction = (payload) => ({
+  type: EDIT_EXPENSE,
   payload,
-  sum,
 });
 
-export const changeSumExpenses = (payload) => ({
-  type: CHANGE_SUM_EXPENSES,
+export const deleteExpenseAction = (payload) => ({
+  type: DELETE_EXPENSE,
   payload,
 });
 
 export function fetchAPICurr() {
   return async (dispatch) => {
     try {
-      // dispatch(requestAPI());
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      // console.log(data);
       const resultAll = Object.keys(data);
       const result = resultAll.filter((curr) => curr !== 'USDT');
-      // console.log(result);
       dispatch(getCurr(result));
     } catch (error) {
       console.log(error);
@@ -54,9 +50,6 @@ export function fetchAPICurr() {
 export async function fetchAPI() {
   const response = await fetch('https://economia.awesomeapi.com.br/json/all');
   const data = await response.json();
-  console.log(data);
-  // console.log(result);
-  // excluir moeda com -> delete data[moeda]
   delete data.USDT;
   return data;
 }
@@ -73,8 +66,3 @@ export function addExpanseThunk(payload) {
     }
   };
 }
-
-// export const addExpanseThunk = (payload) => ({
-//   type: ADD_EXPENSE,
-//   payload,
-// });
