@@ -1,41 +1,53 @@
-.App {
-  text-align: center;
+html {
+  box-sizing: border-box;
+  font-size: 16px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  height: 100vh;
+  margin: 0, auto;
+  padding: 0, auto;
+  font-weight: normal;
+  background-color: #e2e2e2;
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
-  color: white;
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+.container_app {
+  height: 100%;
+  width: 100%;
+}
+
+.container_wallet_title {
+  /* box-shadow: 10px 5px 5px rgb(10, 10, 10); */
+  height: 60px;
+  /* background-color: rgb(53, 38, 38); */
+  /* background-color: #bbb9b9; */
+  /* background-color: rgb(39, 189, 226); */
+  background-color: #e2e2e2;
+  /* opacity: 0.2; */
   display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+  justify-content: flex-start;
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
+.wallet_title { 
+  text-align:left;
+  font-size: 40px;
+  /* color: rgb(255, 254, 254); */
+  color: rgb(39, 189, 226);
+  font-weight: bolder;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-transform: uppercase;
+  margin-left: 40px;
+  margin-top: 40px;
+  /* text-shadow: 4px 4px black; */
 }

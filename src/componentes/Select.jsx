@@ -11,11 +11,13 @@ class Select extends Component {
       id,
       options,
       data,
+      className,
     } = this.props;
     return (
       <label htmlFor={ name }>
         { label }
         <select
+          className={ className }
           data-testid={ data }
           name={ name }
           id={ id }
@@ -44,6 +46,7 @@ Select.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default Select;

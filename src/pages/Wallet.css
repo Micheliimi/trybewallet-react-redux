@@ -1,0 +1,45 @@
+.container_wallet {
+  height: 100%;
+  width: 100%;
+  background-image: url(..//pexels-karolina-grabowska-4386154.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.container_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 50px;
+  background-color: black;
+  opacity: 0.7;
+  color: white;
+  box-shadow: 2px 2px 2px rgb(27, 26, 26);
+}
+
+.container_header_total_currency {
+  display: flex;
+  justify-content: space-between;
+  flex-basis: 200px;
+  margin-right: 20px;
+  height: 100%;
+  align-items: center;
+}
+
+.header_user, .header_total, .header_currency {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.input_value_wallet:focus {
+  border: 3px solid #555;
+}
+
+.select_coin_wallet {
+  width: 100%;
+  /* padding: 16px 20px; */
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+}

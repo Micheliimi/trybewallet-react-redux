@@ -5,6 +5,7 @@ import Header from '../componentes/Header';
 import Input from '../componentes/Input';
 import Select from '../componentes/Select';
 import Button from '../componentes/Button';
+import './Wallet.css';
 import Table from '../componentes/Table';
 import { fetchAPICurr,
   addExpanseThunk,
@@ -120,12 +121,11 @@ class Wallet extends React.Component {
       editMode,
     } = this.state;
     return (
-      <div>
-        TrybeWallet
+      <div className="container_wallet">
         <Header />
-        <hr />
         <div>
           <Input
+            className="input_value_wallet"
             data="value-input"
             label="Valor: "
             type="number"
@@ -135,6 +135,7 @@ class Wallet extends React.Component {
             required
           />
           <Select
+            className="select_coin_wallet"
             data="currency-input"
             onChange={ this.handleChange }
             value={ coin }
@@ -183,7 +184,8 @@ class Wallet extends React.Component {
               <Button
                 type="button"
                 label="Adicionar despesa"
-                onClick={ this.sendAction }
+                onClick={ this.reacticons
+                 }
                 disabled={ false }
               />)}
         </div>

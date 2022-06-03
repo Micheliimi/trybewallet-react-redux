@@ -14,12 +14,15 @@ class Header extends React.Component {
     }, 0);
 
     return (
-      <div>
-        <h3 data-testid="email-field">{ email }</h3>
-        <h3 data-testid="total-field">
-          { sumValue.toFixed(2) }
-        </h3>
-        <h3 data-testid="header-currency-field">BRL</h3>
+      <div className="container_header">
+        <h3 data-testid="email-field" className="header_user">{ `Olá ${email}` }</h3>
+        <i className="fi fi-bs-credit-card" />
+        <div className="container_header_total_currency">
+          <h3 data-testid="total-field" className="header_total">
+            { `R$ ${sumValue.toFixed(2)}` }
+          </h3>
+          <h3 data-testid="header-currency-field" className="header_currency">BRL</h3>
+        </div>
       </div>
     );
   }

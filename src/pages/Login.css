@@ -1,0 +1,102 @@
+ .login {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;   
+ }
+ 
+ .section_apresentation {
+    margin-top: 150px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+ }
+
+ h2 {
+    flex-basis: 800px;
+    text-align: center;
+    font-size: 30px;
+    font-family:'Times New Roman', Times, serif;
+  }
+ .section_login {
+  height: 92%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(226,226,226,255);
+  /* background-image: url(../pexels-pratik-gupta-2815891.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
+}
+
+img {
+  box-shadow: 10px 5px 5px rgba(226,226,226,255);
+}
+
+.login_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-content: space-between;
+  width: 550px;
+  height: 350px;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px rgb(197, 196, 196);
+}
+
+.login_input_button {
+  background: #B9DFFF;
+  color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px #eee;
+  text-shadow:none;
+  width: 200px;
+  height: 35px;
+}
+
+.login_input_button:hover {
+  background: rgb(39, 189, 226);
+  color: #fff;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px #eee;
+  text-shadow:none;
+  width: 200px;
+  height: 35px;
+}
+
+.login_form_inputs {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.login_input_email {
+  width: 370px;
+  height: 30px;
+  align-self: center;
+  display: block;
+}
+
+.login_input_password {
+  width: 370px;
+  height: 30px;
+  align-self: center;
+  display: block;
+}
+
+.input:hover {
+  border: 1px solid rgb(39, 189, 226)
+}
+
+.input label:hover {
+  font-weight: bolder;
+}
