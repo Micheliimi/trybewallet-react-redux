@@ -27,7 +27,6 @@ class Login extends React.Component {
   }
 
   validateForm() {
-    // console.log('alou');
     const { email, password } = this.state;
     const re = /\S+@\S+\.\S+/;
     const number = 6;
@@ -47,7 +46,7 @@ class Login extends React.Component {
     const { addUser } = this.props;
     addUser(email);
     const { history } = this.props;
-    history.push('/carteira'); // Usar history.push para redirecionar!
+    history.push('/carteira'); 
   }
 
   render() {
@@ -63,7 +62,6 @@ class Login extends React.Component {
         <section className="section_login">
           <div>
             <img
-              // src="../foto-homem.png"
               src="https://img.freepik.com/fotos-gratis/foto-de-estudio-de-gengibre-hippie-com-barba-grossa-corte-de-cabelo-da-moda-tem-uma-expressao-seria-aponta-com-o-dedo-indicador-no-canto-superior-direito_273609-18616.jpg?t=st=1653313714~exp=1653314314~hmac=1dcbeefb137f93831c762e564541106002c078350101a5ec8af8ff7f3b02a304&w=1060"
               alt="Foto de estúdio de gengibre hippie com barba grossa. Foto gratuita"
               width="600px"
